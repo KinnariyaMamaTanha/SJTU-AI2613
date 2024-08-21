@@ -1,6 +1,6 @@
 # Markov Chains with Finite States
 
-## Discret MavKov Chain
+## Discret Finite MavKov Chain
 
 - **Time-Homogeneous**: 转移概率不随时间改变而改变
 - **状态转移矩阵**：$P(i,j) = \mathrm{Pr}[X_{t+1}=j \mid X_t = i]$，$\mu_t = P^T\mu_{t-1}=(P^T)^t\mu_0$
