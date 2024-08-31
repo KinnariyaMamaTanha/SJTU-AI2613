@@ -61,6 +61,8 @@ $$
 \mathrm{d}X_t = -X_t \mathrm{d}t + \mathrm{d}B_t
 $$
 
+最终会收敛到 Gaussian.
+
 ### Wright-Fisher Process
 
 $\mu(x) = 0, \sigma^2(x)=x(1-x), X(0) = \frac{1}{2}$

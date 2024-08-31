@@ -14,7 +14,8 @@
 2. $ \delta _x$ 为狄拉克测度，表示在 $t = 0$ 时，系统还没有演化，状态还是 $x$ 本身。
 3. 记忆无关性：从 $x$ 出发经过 $s + t$ 的时间，等价于先从 $x$ 出发经过 $s$ 的时间到达某个 $y$，再经过 $t$ 的时间到达最终状态。
 4. $Q_t(x, \cdot)$ 表示从状态 $x$ 经过时间 $t$ 后到达某个集合的概率
-   1. $Q_t(x, \mathrm{d}y)$：描述转移到一个无穷小区域的概率，可以被积分，如对集合 $A$，有 $Q_t(x, A) = \int_{A}Q_t(x, \mathrm{d}y)$
+   1. $Q_t(x, \mathrm{d}y)$：描述转移到一个无穷小区域的概率，可以被积分，如对集合 $A$，有 $Q_t(x, A) = \int_{A}Q_t(x, \mathrm{d}y)$（这里是对 $A$ 上所有 $\mathrm{d}y$ 进行积分）
+   2. $Q_t$ 就相当于 Markov chain 中的转移矩阵 $P$ 的 $t$ 次方，不过 $t$ 由离散变为连续的了。
 
 !!! note **另一种定义描述**
     设 \( (P_t)_{t \geq 0} \) 是一族作用在某个函数空间（通常是某个测度空间上的可测函数空间，例如 \( L^p \) 空间）上的线性算子。这个算子族称为一个马尔可夫半群，如果满足以下条件：
@@ -48,4 +49,30 @@ $$
 
 ### Chapman-Kolmogorov equation
 
-$Q$ 是一个 $(E, \mathcal{F})$ 上的马尔可夫半群，那么对任何 $f \in C_0(E)$，有 $Q_{s+t}(f) = Q_sQ_t(f)$
+$Q$ 是一个 $(E, \mathcal{F})$ 上的马尔可夫半群，那么对任何 $f \in C_0(E)$，有 $Q_{s+t}(f) = Q_sQ_t(f)$。
+
+利用 $Q_t$ 的性质易证。
+
+## Generator of the Markov Semigroup
+
+设 $Q$ 是一个 $(E, \mathcal{F})$ 上的 Markov semigroup，定义 $\mathcal{L}$ 为 $Q$ 的 generator 当且仅当
+
+$$
+\mathcal{L}f = \lim_{t \downarrow 0} \frac{Q_tf - f}{t}
+$$
+
+对任意 $f \in D(\mathcal{L}) := { f \in C_0(E) : \text{the aboce limit exists} }$ 成立。
+
+可以得到
+
+- $\mathcal{L} = \frac{\mathrm{d}}{\mathrm{d}t}Q_t|_{t=0}$，因此 $\mathcal{L}$ 是算子族 $\{ Q_t\}_{t\ge 0}$ 的“变化率”
+- $Q_t = e^{t \mathcal{L}}$ 对任意 $t$ 成立。（正如离散马尔可夫链中 $P^t$ 仅由最初的 $P$ 导出一样）
+- $\mathcal{L}$ 和 $Q_t$ 是可交换的：$Q_t \mathcal{L} = \mathcal{L} Q_t$
+
+**直观理解**：马尔可夫半群的生成元描述极短时间内分布状态的变化，因而可以通过积分等方式刻画长时间的变化，或者刻画瞬时状态。
+
+**举例**：
+
+- 泊松过程的 generator：可以得出 $\mathcal{L}f(n) = \lambda (f(n+1) - f(n))$，因此 Poison process 的 generator 为一个主对角线上全为 $-\lambda$，超对角线上全为 $\lambda$ 的无穷大矩阵
+- Itô process (diffusion) 的 generator：$\forall f \in C_0(E), \mathcal{L}f = f'\mu + \frac{1}{2}f''\sigma ^2$
+  - 立即可以得出，standard Brownian motion 的 generator 为 $\mathcal{L}f = \frac{1}{2}f''$
